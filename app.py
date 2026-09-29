@@ -1758,7 +1758,7 @@ with st.container():
             st.session_state["team_choice"] = team_sel
 
         with f_c5:
-            if st.button("Reset Scope", use_container_width=True, key="global_reset_scope_btn"):
+            if st.button("Reset Scope", width="stretch", key="global_reset_scope_btn"):
                 st.session_state["date_range"] = (min_date, max_date)
                 st.session_state["chan_choice"] = "All Channels"
                 st.session_state["shift_choice"] = "All Shifts"
@@ -1929,18 +1929,18 @@ with st.container():
 
                 chip_row1_c1, chip_row1_c2 = st.columns(2)
                 with chip_row1_c1:
-                    if st.button("Why is Morning higher?", use_container_width=True, key="hub_chip_morning"):
+                    if st.button("Why is Morning higher?", width="stretch", key="hub_chip_morning"):
                         st.session_state["active_hub_q"] = "Why is Morning shift higher?"
                 with chip_row1_c2:
-                    if st.button("Explain ₹854K exposure", use_container_width=True, key="hub_chip_exposure"):
+                    if st.button("Explain ₹854K exposure", width="stretch", key="hub_chip_exposure"):
                         st.session_state["active_hub_q"] = "What is driving the ₹854K exposure?"
 
                 chip_row2_c1, chip_row2_c2 = st.columns(2)
                 with chip_row2_c1:
-                    if st.button("What should Neha check?", use_container_width=True, key="hub_chip_investigate"):
+                    if st.button("What should Neha check?", width="stretch", key="hub_chip_investigate"):
                         st.session_state["active_hub_q"] = "What should Neha investigate first?"
                 with chip_row2_c2:
-                    if st.button("Open AI Assistant →", use_container_width=True, key="hub_open_ai_btn"):
+                    if st.button("Open AI Assistant →", width="stretch", key="hub_open_ai_btn"):
                         st.session_state["main_shell_navigation"] = "AI Assistant"
                         st.rerun()
 
@@ -2056,7 +2056,7 @@ with st.container():
                         range=[0, max(0.42, w_df["breach_rate"].max() + 0.05) if not w_df.empty else 0.42],
                     ),
                 )
-                st.plotly_chart(fig_w, use_container_width=True)
+                st.plotly_chart(fig_w, width="stretch")
 
         with shift_col:
             sr = shift_report(view)
@@ -2215,11 +2215,11 @@ with st.container():
                     </div>
                 </div>
                 """)
-                st.download_button("Weekly SLA Report (CSV)", w_df.to_csv(index=False).encode(), "vireo_weekly_sla_report.csv", "text/csv", use_container_width=True, key="overview_download_weekly_csv")
-                st.download_button("Shift SLA Report (CSV)", sr.to_csv(index=False).encode(), "vireo_shift_sla_report.csv", "text/csv", use_container_width=True, key="overview_download_shift_csv")
-                st.download_button("Channel SLA Report (CSV)", cr.to_csv(index=False).encode(), "vireo_channel_sla_report.csv", "text/csv", use_container_width=True, key="overview_download_channel_csv")
+                st.download_button("Weekly SLA Report (CSV)", w_df.to_csv(index=False).encode(), "vireo_weekly_sla_report.csv", "text/csv", width="stretch", key="overview_download_weekly_csv")
+                st.download_button("Shift SLA Report (CSV)", sr.to_csv(index=False).encode(), "vireo_shift_sla_report.csv", "text/csv", width="stretch", key="overview_download_shift_csv")
+                st.download_button("Channel SLA Report (CSV)", cr.to_csv(index=False).encode(), "vireo_channel_sla_report.csv", "text/csv", width="stretch", key="overview_download_channel_csv")
                 ar_full = agent_report(view)
-                st.download_button("Agent Performance Report (CSV)", ar_full.to_csv(index=False).encode(), "vireo_agent_sla_report.csv", "text/csv", use_container_width=True, key="overview_download_agent_csv")
+                st.download_button("Agent Performance Report (CSV)", ar_full.to_csv(index=False).encode(), "vireo_agent_sla_report.csv", "text/csv", width="stretch", key="overview_download_agent_csv")
 
                 render_html("""
                 <div style="margin-top: 1rem; padding: 0.75rem 0.85rem; background: var(--surface-secondary); border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.72rem; color: var(--text-muted); line-height: 1.45;">
@@ -2250,7 +2250,7 @@ with st.container():
         with col_inbox:
             with st.container(border=True):
                 st.markdown("<div style='font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.65rem;'>Chat History</div>", unsafe_allow_html=True)
-                if st.button("+ New Chat", key="ai_inbox_new_chat_btn", use_container_width=True):
+                if st.button("+ New Chat", key="ai_inbox_new_chat_btn", width="stretch"):
                     new_cid = f"conv_{int(time.time() * 1000)}"
                     st.session_state["conversations"][new_cid] = {
                         "id": new_cid,
@@ -2277,7 +2277,7 @@ with st.container():
                             )
                             c_conf_del, c_conf_can = st.columns([1, 1], gap="small")
                             with c_conf_del:
-                                if st.button("Delete", key=f"btn_confirm_del_{cid}", type="primary", use_container_width=True):
+                                if st.button("Delete", key=f"btn_confirm_del_{cid}", type="primary", width="stretch"):
                                     updated_convs, new_active = delete_conversation(
                                         st.session_state["conversations"],
                                         cid_to_delete=cid,
@@ -2289,7 +2289,7 @@ with st.container():
                                     st.session_state["ai_chat_history"] = updated_convs[new_active]["messages"]
                                     st.rerun()
                             with c_conf_can:
-                                if st.button("Cancel", key=f"btn_cancel_del_{cid}", use_container_width=True):
+                                if st.button("Cancel", key=f"btn_cancel_del_{cid}", width="stretch"):
                                     st.session_state["conv_to_delete"] = None
                                     st.rerun()
                     else:
@@ -2298,7 +2298,7 @@ with st.container():
                             if st.button(
                                 cdata["title"],
                                 key=f"inbox_conv_btn_{cid}",
-                                use_container_width=True,
+                                width="stretch",
                                 type="primary" if is_active else "secondary",
                             ):
                                 st.session_state["active_conv_id"] = cid
@@ -2311,7 +2311,7 @@ with st.container():
                                 icon=":material/delete_outline:",
                                 key=f"inbox_del_btn_{cid}",
                                 help=f"Delete '{cdata['title']}'",
-                                use_container_width=True,
+                                width="stretch",
                             ):
                                 st.session_state["conv_to_delete"] = cid
                                 st.rerun()
@@ -2389,13 +2389,13 @@ with st.container():
             # 4. Recent Conversation Topics
             with st.container(border=True):
                 st.markdown("<div style='font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;'>Recent Topics</div>", unsafe_allow_html=True)
-                if st.button("Morning Shift Surge", use_container_width=True, key="recent_topic_1"):
+                if st.button("Morning Shift Surge", width="stretch", key="recent_topic_1"):
                     st.session_state["pending_ai_query"] = "Explain the Morning shift performance."
                     st.rerun()
-                if st.button("Chat vs Voice Standards", use_container_width=True, key="recent_topic_2"):
+                if st.button("Chat vs Voice Standards", width="stretch", key="recent_topic_2"):
                     st.session_state["pending_ai_query"] = "Compare Chat and Voice."
                     st.rerun()
-                if st.button("₹854K Credit Breakdown", use_container_width=True, key="recent_topic_3"):
+                if st.button("₹854K Credit Breakdown", width="stretch", key="recent_topic_3"):
                     st.session_state["pending_ai_query"] = "Explain the ₹854K credit exposure."
                     st.rerun()
 
@@ -2414,7 +2414,7 @@ with st.container():
             with c_chat_ctrl:
                 c_btn1, c_btn2, c_btn3 = st.columns([1.1, 1.1, 1.1])
                 with c_btn1:
-                    if st.button("+ New Chat", use_container_width=True, key="ai_btn_new_chat"):
+                    if st.button("+ New Chat", width="stretch", key="ai_btn_new_chat"):
                         new_cid = f"conv_{int(time.time() * 1000)}"
                         st.session_state["conversations"][new_cid] = {
                             "id": new_cid,
@@ -2427,13 +2427,13 @@ with st.container():
                         save_conversations(st.session_state["conversations"])
                         st.rerun()
                 with c_btn2:
-                    if st.button("Clear Chat", use_container_width=True, key="ai_btn_clear_chat", disabled=len(active_messages) == 0):
+                    if st.button("Clear Chat", width="stretch", key="ai_btn_clear_chat", disabled=len(active_messages) == 0):
                         active_conv["messages"] = []
                         st.session_state["pending_ai_query"] = None
                         save_conversations(st.session_state["conversations"])
                         st.rerun()
                 with c_btn3:
-                    if st.button("Delete Chat", use_container_width=True, key="ai_btn_del_chat"):
+                    if st.button("Delete Chat", width="stretch", key="ai_btn_del_chat"):
                         st.session_state["conv_to_delete"] = active_cid
                         st.rerun()
 
@@ -2449,7 +2449,7 @@ with st.container():
                     )
                     col_conf1, col_conf2, _ = st.columns([1.2, 1.2, 4], gap="small")
                     with col_conf1:
-                        if st.button("Confirm Delete", key="hdr_confirm_del_btn", type="primary", use_container_width=True):
+                        if st.button("Confirm Delete", key="hdr_confirm_del_btn", type="primary", width="stretch"):
                             updated_convs, new_active = delete_conversation(
                                 st.session_state["conversations"],
                                 cid_to_delete=active_cid,
@@ -2461,7 +2461,7 @@ with st.container():
                             st.session_state["ai_chat_history"] = updated_convs[new_active]["messages"]
                             st.rerun()
                     with col_conf2:
-                        if st.button("Cancel", key="hdr_cancel_del_btn", use_container_width=True):
+                        if st.button("Cancel", key="hdr_cancel_del_btn", width="stretch"):
                             st.session_state["conv_to_delete"] = None
                             st.rerun()
 
@@ -2480,29 +2480,29 @@ with st.container():
                 st.markdown("<div style='font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;'>Suggested Operational Inquiries:</div>", unsafe_allow_html=True)
                 p_c1, p_c2 = st.columns(2)
                 with p_c1:
-                    if st.button("Why are SLA breaches high?", use_container_width=True, key="prompt_btn_1"):
+                    if st.button("Why are SLA breaches high?", width="stretch", key="prompt_btn_1"):
                         st.session_state["pending_ai_query"] = "Why are SLA breaches high?"
                         st.rerun()
-                    if st.button("Explain the Morning shift performance.", use_container_width=True, key="prompt_btn_2"):
+                    if st.button("Explain the Morning shift performance.", width="stretch", key="prompt_btn_2"):
                         st.session_state["pending_ai_query"] = "Explain the Morning shift performance."
                         st.rerun()
-                    if st.button("Which channel has the highest breach rate?", use_container_width=True, key="prompt_btn_3"):
+                    if st.button("Which channel has the highest breach rate?", width="stretch", key="prompt_btn_3"):
                         st.session_state["pending_ai_query"] = "Which channel has the highest breach rate?"
                         st.rerun()
-                    if st.button("Summarize this week's SLA performance.", use_container_width=True, key="prompt_btn_4"):
+                    if st.button("Summarize this week's SLA performance.", width="stretch", key="prompt_btn_4"):
                         st.session_state["pending_ai_query"] = "Summarize this week's SLA performance."
                         st.rerun()
                 with p_c2:
-                    if st.button("Explain the ₹854K credit exposure.", use_container_width=True, key="prompt_btn_5"):
+                    if st.button("Explain the ₹854K credit exposure.", width="stretch", key="prompt_btn_5"):
                         st.session_state["pending_ai_query"] = "Explain the ₹854K credit exposure."
                         st.rerun()
-                    if st.button("Compare Chat and Voice.", use_container_width=True, key="prompt_btn_6"):
+                    if st.button("Compare Chat and Voice.", width="stretch", key="prompt_btn_6"):
                         st.session_state["pending_ai_query"] = "Compare Chat and Voice."
                         st.rerun()
-                    if st.button("Give me the key operational findings.", use_container_width=True, key="prompt_btn_7"):
+                    if st.button("Give me the key operational findings.", width="stretch", key="prompt_btn_7"):
                         st.session_state["pending_ai_query"] = "Give me the key operational findings."
                         st.rerun()
-                    if st.button("Show me what changed week over week.", use_container_width=True, key="prompt_btn_8"):
+                    if st.button("Show me what changed week over week.", width="stretch", key="prompt_btn_8"):
                         st.session_state["pending_ai_query"] = "Show me what changed week over week."
                         st.rerun()
 
@@ -2540,7 +2540,7 @@ with st.container():
                         if idx == len(active_messages) - 1:
                             col_act_regen, col_act_fu1, col_act_fu2, col_act_fu3 = st.columns([1.1, 1.4, 1.5, 1.4])
                             with col_act_regen:
-                                if st.button("↻ Regenerate", key=f"btn_regen_{active_cid}_{idx}", use_container_width=True):
+                                if st.button("↻ Regenerate", key=f"btn_regen_{active_cid}_{idx}", width="stretch"):
                                     if len(active_messages) >= 2:
                                         last_user = active_messages[-2]["content"]
                                         active_conv["messages"] = active_messages[:-2]
@@ -2548,15 +2548,15 @@ with st.container():
                                         st.session_state["pending_ai_query"] = last_user
                                         st.rerun()
                             with col_act_fu1:
-                                if st.button("What about Morning?", key=f"btn_fu1_{active_cid}_{idx}", use_container_width=True):
+                                if st.button("What about Morning?", key=f"btn_fu1_{active_cid}_{idx}", width="stretch"):
                                     st.session_state["pending_ai_query"] = "What about the morning shift?"
                                     st.rerun()
                             with col_act_fu2:
-                                if st.button("How much credit?", key=f"btn_fu2_{active_cid}_{idx}", use_container_width=True):
+                                if st.button("How much credit?", key=f"btn_fu2_{active_cid}_{idx}", width="stretch"):
                                     st.session_state["pending_ai_query"] = "How much credit exposure does that represent?"
                                     st.rerun()
                             with col_act_fu3:
-                                if st.button("Compare with Email", key=f"btn_fu3_{active_cid}_{idx}", use_container_width=True):
+                                if st.button("Compare with Email", key=f"btn_fu3_{active_cid}_{idx}", width="stretch"):
                                     st.session_state["pending_ai_query"] = "Compare that with email."
                                     st.rerun()
 
@@ -2658,7 +2658,7 @@ with st.container():
                 yaxis=dict(title="Tickets", gridcolor="#1e293b" if theme_is_dark else "#f8fafc", showline=False, side="left"),
                 yaxis2=dict(title="Breach Rate", tickformat=".0%", overlaying="y", side="right", range=[0, 0.45]),
             )
-            st.plotly_chart(fig_sla_trend, use_container_width=True)
+            st.plotly_chart(fig_sla_trend, width="stretch")
     
             render_html("<div style='height: 12px;'></div><div style='font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--text-primary);'>Weekly Performance Register:</div>")
     
@@ -2672,7 +2672,7 @@ with st.container():
                     "tickets": "{:,}",
                     "breaches": "{:,}",
                 }),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
     
@@ -2736,7 +2736,7 @@ with st.container():
                 yaxis=dict(title="Tickets", gridcolor="#1e293b" if theme_is_dark else "#f8fafc", side="left"),
                 yaxis2=dict(title="Breach Rate", tickformat=".0%", overlaying="y", side="right", range=[0, 0.45]),
             )
-            st.plotly_chart(fig_h, use_container_width=True)
+            st.plotly_chart(fig_h, width="stretch")
     
             render_html("<div style='height: 12px;'></div><div style='font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--text-primary);'>Performance by Support Team Cohort:</div>")
             team_df = view.groupby(["roster_team", "tier"]).agg(
@@ -2754,7 +2754,7 @@ with st.container():
                     "tickets": "{:,}",
                     "breaches": "{:,}",
                 }),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
     
@@ -2819,7 +2819,7 @@ with st.container():
                     "ticket_volume": "{:,}",
                     "breach_count": "{:,}",
                 }),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
     
@@ -2871,7 +2871,7 @@ with st.container():
                     fig_ag.update_traces(line_color="#2dd4bf" if theme_is_dark else "#0f766e")
                     fig_ag.update_yaxes(tickformat=".0%")
                     apply_studyos_chart_style(fig_ag, height=220)
-                    st.plotly_chart(fig_ag, use_container_width=True)
+                    st.plotly_chart(fig_ag, width="stretch")
     
             st.download_button(
                 "Download Agent Performance Report (CSV)",
@@ -2937,7 +2937,7 @@ with st.container():
                 labels={"tickets": "Audited Tickets", "channel": "Channel", "breach_rate": "Breach Rate"},
             )
             apply_studyos_chart_style(fig_ch, height=320)
-            st.plotly_chart(fig_ch, use_container_width=True)
+            st.plotly_chart(fig_ch, width="stretch")
     
             st.dataframe(
                 cr[["channel", "tickets", "breaches", "breach_rate", "sla_credit_exposure", "avg_response_minutes"]].style.format({
@@ -2947,7 +2947,7 @@ with st.container():
                     "breaches": "{:,}",
                     "avg_response_minutes": "{:.1f}m",
                 }),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
     
@@ -3073,7 +3073,7 @@ with st.container():
             theme_is_dark = (st.session_state.get("theme_choice", "Light") == "Dark")
             fig_mo.update_traces(marker_color="#2dd4bf" if theme_is_dark else "#0f766e")
             apply_studyos_chart_style(fig_mo, height=240)
-            st.plotly_chart(fig_mo, use_container_width=True)
+            st.plotly_chart(fig_mo, width="stretch")
     
             render_html("""
             <div style="background: var(--surface-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem 1.25rem; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6;">
